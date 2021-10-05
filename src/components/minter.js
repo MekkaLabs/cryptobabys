@@ -9,7 +9,7 @@ const truncate = (input, len) =>
   input.length > len ? `${input.substring(0, len)}...` : input;
 
 
-  export default function Minter() {
+export default function Minter() {
   const dispatch = useDispatch();
   const blockchain = useSelector((state) => state.blockchain);
   const data = useSelector((state) => state.data);
@@ -109,19 +109,24 @@ const truncate = (input, len) =>
   }, [blockchain.account]);
 
   return (
-    <div>
-      <div> 
-
+    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+      <div>
+        <div>
           <div>
-            <div>
-              {data.totalSupply} / {CONFIG.MAX_SUPPLY}
-            </div>
-            <div>
+            <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+              <span className="block xl:inline">{data.totalSupply} / </span>
+              <span className="block text-indigo-600 xl:inline">{CONFIG.MAX_SUPPLY}</span>
+            </h1>
+          </div>
+          <div className="py-10">
+            <p className="mt-3 max-w-md text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+              Contract:
               <Link target={"_blank"} href={CONFIG.SCAN_LINK}>
-                {truncate(CONFIG.CONTRACT_ADDRESS, 15)}
+                {(CONFIG.CONTRACT_ADDRESS)}
               </Link>
-            </div> 
-            <div>           
+            </p>
+          </div>
+          <div>
             {Number(data.totalSupply) >= CONFIG.MAX_SUPPLY ? (
               <div>
                 <div>
@@ -130,7 +135,7 @@ const truncate = (input, len) =>
                 <div>
                   You can still find {CONFIG.NFT_NAME} on
                 </div>
-                
+
                 <Link target={"_blank"} href={CONFIG.MARKETPLACE_LINK}>
                   {CONFIG.MARKETPLACE}
                 </Link>
@@ -138,31 +143,35 @@ const truncate = (input, len) =>
             ) : (
               <div>
                 <div>
-                  1 {CONFIG.SYMBOL} costs {CONFIG.DISPLAY_COST}{" "}
-                  {CONFIG.NETWORK.SYMBOL}.
+                  <h1 className="text-2xl tracking-tight font-extrabold text-gray-900 sm:text-2xl md:text-2xl">
+                    <span className="block xl:inline">1 {CONFIG.SYMBOL} costs </span>
+                    <span className="block text-indigo-600 xl:inline">{CONFIG.DISPLAY_COST}{" "}
+                      {CONFIG.NETWORK.SYMBOL}.</span>
+                  </h1>
+
                 </div>
-                
+
                 <div>
                   Excluding gas fees.
-                </div>                
+                </div>
                 {blockchain.account === "" ||
-                blockchain.smartContract === null ? (
+                  blockchain.smartContract === null ? (
                   <div>
-                    <div>
+                    <div className="py-4">
                       Connect to the {CONFIG.NETWORK.NAME} network
                     </div>
-                    <button type="button" 
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        onClick={(e) => {
+                    <button type="button"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      onClick={(e) => {
                         e.preventDefault();
                         dispatch(connect());
                         getData();
                       }}
                     >
                       CONNECT
-                      </button>
+                    </button>
                     {blockchain.errorMsg !== "" ? (
-                      <div>                        
+                      <div>
                         <div>
                           {blockchain.errorMsg}
                         </div>
@@ -174,38 +183,46 @@ const truncate = (input, len) =>
                     <div>
                       {feedback}
                     </div>
-                    
-                    <div>
-                      <button type="button" 
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        disabled={claimingNft ? 1 : 0}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          decrementMintAmount();
-                        }}
-                      >
-                        -
-                      </button>                     
-                      <div>
-                        {mintAmount}
+
+                    <div className="space-x-4 py-4">
+                      <div className="inline-block">
+                        <button type="button"
+                          className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                          disabled={claimingNft ? 1 : 0}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            decrementMintAmount();
+                          }}
+                        >
+                          -
+                        </button>
                       </div>
-                      
-                      <button type="button" 
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        disabled={claimingNft ? 1 : 0}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          incrementMintAmount();
-                        }}
-                      >
-                        +
-                      </button>
+                      <div className="inline-block">
+                        <p class="text-xl font-semibold text-gray-900  px-12">
+                          {mintAmount}
+                        </p>
+                      </div>
+                      <div className="inline-block">
+                        <p class="text-xl font-semibold text-gray-900">
+                          <button type="button"
+                            className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            disabled={claimingNft ? 1 : 0}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              incrementMintAmount();
+                            }}
+                          >
+                            +
+                          </button>
+                        </p>
+                      </div>
                     </div>
-                    
-                    <div>
-                      <button type="button" 
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    
+
+
+                    <div className="py-4">
+                      <button type="button"
+                        className="inline-flex items-center px-24 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+
                         disabled={claimingNft ? 1 : 0}
                         onClick={(e) => {
                           e.preventDefault();
@@ -219,22 +236,22 @@ const truncate = (input, len) =>
                   </div>
                 )}
               </div>
-            )}           
+            )}
           </div>
-        <div>
-          <div>
-            Please make sure you are connected to the right network (
-            {CONFIG.NETWORK.NAME} Mainnet) and the correct address. Please note:
-            Once you make the purchase, you cannot undo this action.
-          </div>        
-          <div>
-            We have set the gas limit to {CONFIG.GAS_LIMIT} for the contract to
-            successfully mint your NFT. We recommend that you don't lower the
-            gas limit.
+          <div className="py-4">
+            <div>
+              Please make sure you are connected to the right network (
+              {CONFIG.NETWORK.NAME} Mainnet) and the correct address. Please note:
+              Once you make the purchase, you cannot undo this action.
+            </div>
+            <div>
+              We have set the gas limit to {CONFIG.GAS_LIMIT} for the contract to
+              successfully mint your NFT. We recommend that you don't lower the
+              gas limit.
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }

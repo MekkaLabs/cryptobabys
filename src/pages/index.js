@@ -1,15 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Minter from "../components/minter";
-
-
 import About from '../components/about'
 import Description from '../components/description'
 import Header from '../components/header'
 import Portfolio from '../components/portfolio'
 import Roadmap from '../components/roadmap'
 import SectionOne from '../components/sectionone'
-
 import store from "../redux/store";
 import { Provider } from "react-redux";
 
@@ -28,7 +25,7 @@ export default function Home() {
         <Provider store={store}>
         <Header />
         <SectionOne />
-        <Minter />
+        <Minter />       
         <Portfolio />
         <About />
         <Description />
