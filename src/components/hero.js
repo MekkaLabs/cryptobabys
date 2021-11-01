@@ -3,9 +3,7 @@ import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import Image from 'next/image'
 import CryptoBabys from '../../public/cryptobabys.png'
-
-
-
+import BabyMachine from '../../public/baby-machine.png'
 
 const navigation = [
     { name: 'Matic', href: '/polygon' },
@@ -14,9 +12,9 @@ const navigation = [
     { name: 'Company', href: '#' },
 ]
 
-export default function Header() {
+export default function Hero() {
     return (
-        <header className="bg-gray-900">
+        <div className="relative overflow-hidden">
             <Popover as="header" className="relative">
                 <div className="bg-gray-900 pt-6">
                     <nav
@@ -25,7 +23,7 @@ export default function Header() {
                     >
                         <div className="flex items-center flex-1">
                             <div className="flex items-center justify-between w-full md:w-auto">
-                                <a href="./">
+                                <a href="#">
                                     <span className="sr-only">Workflow</span>
                                     <Image
                                         className="h-8 w-auto sm:h-10"
@@ -48,8 +46,16 @@ export default function Header() {
                                 ))}
                             </div>
                         </div>
-                        <div className="bg-blue-300 text-black py-4 px-12">
-                            ATTACKS ON POLYGON MATIC
+                        <div className="hidden md:flex md:items-center md:space-x-6">
+                            <a href="#" className="text-base font-medium text-white hover:text-gray-300">
+                                Log in
+                            </a>
+                            <a
+                                href="#"
+                                className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700"
+                            >
+                                Start free trial
+                            </a>
                         </div>
                     </nav>
                 </div>
@@ -113,6 +119,46 @@ export default function Header() {
                     </Popover.Panel>
                 </Transition>
             </Popover>
-        </header>
+
+            <main>
+                <div className=" bg-gray-900 h-screen lg:flex lg:items-center p-8 sm:p-12">
+                    <div className="mx-auto max-w-7xl lg:px-8">
+                        <div className="lg:grid lg:grid-cols-2 lg:gap-8">
+                            <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center">
+                                <div className="lg:py-24">
+
+                                    <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
+                                        <span className="block">A better way to</span>
+                                        <span className="block text-indigo-400">ship web apps</span>
+                                    </h1>
+                                    <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                                        Anim aute id magna aliqua ad ad non deserunt sunt.Qui irure qui Lorem cupidatat commodo.Elit sunt
+                                        amet fugiat veniam occaecat fugiat.
+                                    </p>
+                                    <div>
+                                        <button className="relative block mt-10 cursor-pointer">
+                                            <div className="absolute h-14 inset-x-0 bg-gray-400 border border-gray-500" />
+                                            <div className="relative bottom-1 right-1 text-xl font-thin leading-none tracking-wider py-4 px-10 bg-gray-100 border border-gray-500 transform hover:translate-y-1 hover:translate-x-1 transition duration-200 ease-in-out">
+                                                Click Me!
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="mt-12 -mb-16 sm:-mb-48 lg:m-0 lg:relative">
+                                <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 lg:max-w-none lg:px-0">
+
+                                    <Image
+                                        className="w-full lg:absolute lg:inset-y-0 lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
+                                        src={BabyMachine}
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div >
+            </main>
+        </div >
     )
 }

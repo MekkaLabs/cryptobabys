@@ -9,6 +9,9 @@ import Roadmap from '../components/roadmap'
 import SectionOne from '../components/sectionone'
 import store from "../redux/store";
 import { Provider } from "react-redux";
+import Hero from '../components/hero';
+import Machine from '../components/machine';
+import Ranking from '../components/ranking';
 
 
 export default function Home() {
@@ -22,16 +25,21 @@ export default function Home() {
 
       <main>
         <div>
-        <Provider store={store}>
-        <Header />
-        <SectionOne />
-        <Minter />       
-        <Portfolio />
-        <About />
-        <Description />
-        <Roadmap />
-          
-        </Provider>,
+          <Provider store={store}>
+            <Hero />
+            <Portfolio />
+            <About />
+            <Roadmap />
+            <Machine />
+            <Ranking />
+            <SectionOne />
+
+
+            <Description />
+
+
+
+          </Provider>,
         </div>
       </main>
 

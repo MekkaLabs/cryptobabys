@@ -14,7 +14,7 @@ export default function Minter() {
   const blockchain = useSelector((state) => state.blockchain);
   const data = useSelector((state) => state.data);
   const [claimingNft, setClaimingNft] = useState(false);
-  const [feedback, setFeedback] = useState(`Click buy to mint your NFT.`);
+  const [feedback, setFeedback] = useState(`Select a number of NFT you mint and Click buy to mint yours NFTs.`);
   const [mintAmount, setMintAmount] = useState(1);
   const [CONFIG, SET_CONFIG] = useState({
     CONTRACT_ADDRESS: "",
@@ -33,6 +33,10 @@ export default function Minter() {
     MARKETPLACE: "",
     MARKETPLACE_LINK: "",
     SHOW_BACKGROUND: false,
+  });
+
+  const [OPENSEA] = useState({
+    URL: "https://opensea.io",
   });
 
   const claimNFTs = () => {
@@ -60,7 +64,7 @@ export default function Minter() {
       .then((receipt) => {
         console.log(receipt);
         setFeedback(
-          `WOW, the ${CONFIG.NFT_NAME} is yours! go visit Opensea.io to view it.`
+          `WOW, the ${CONFIG.NFT_NAME} is yours! go visit ${OPENSEA.URL} to view it.`
         );
         setClaimingNft(false);
         dispatch(fetchData(blockchain.account));
@@ -113,9 +117,9 @@ export default function Minter() {
       <div>
         <div>
           <div>
-            <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-              <span className="block xl:inline">{data.totalSupply} / </span>
-              <span className="block text-indigo-600 xl:inline">{CONFIG.MAX_SUPPLY}</span>
+            <h1 className="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
+              <span className="block xl:inline" >{data.totalSupply} / </span>
+              <span className="block text-blue-300 xl:inline">{CONFIG.MAX_SUPPLY}</span>
             </h1>
           </div>
           <div className="py-10">
@@ -143,7 +147,7 @@ export default function Minter() {
             ) : (
               <div>
                 <div>
-                  <h1 className="text-2xl tracking-tight font-extrabold text-gray-900 sm:text-2xl md:text-2xl">
+                  <h1 className="text-2xl tracking-tight font-extrabold text-white sm:text-2xl md:text-2xl">
                     <span className="block xl:inline">1 {CONFIG.SYMBOL} costs </span>
                     <span className="block text-indigo-600 xl:inline">{CONFIG.DISPLAY_COST}{" "}
                       {CONFIG.NETWORK.SYMBOL}.</span>
@@ -151,25 +155,27 @@ export default function Minter() {
 
                 </div>
 
-                <div>
+                <div className="text-white">
                   Excluding gas fees.
                 </div>
                 {blockchain.account === "" ||
                   blockchain.smartContract === null ? (
                   <div>
-                    <div className="py-4">
+                    <div className="py-4 text-white">
                       Connect to the {CONFIG.NETWORK.NAME} network
                     </div>
-                    <button type="button"
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    <button type="button" className="relative block mt-10 cursor-pointer"
                       onClick={(e) => {
                         e.preventDefault();
                         dispatch(connect());
                         getData();
-                      }}
-                    >
-                      CONNECT
+                      }} >
+                      <div className="absolute h-14 inset-x-0 bg-gray-400 border border-gray-500" />
+                      <div className="relative bottom-1 right-1 text-xl font-thin leading-none tracking-wider py-4 px-10 bg-gray-100 border border-gray-500 transform hover:translate-y-1 hover:translate-x-1 transition duration-200 ease-in-out">
+                        CONNECT
+                      </div>
                     </button>
+
                     {blockchain.errorMsg !== "" ? (
                       <div>
                         <div>
@@ -180,11 +186,11 @@ export default function Minter() {
                   </div>
                 ) : (
                   <div>
-                    <div>
+                    <div className="text-white">
                       {feedback}
                     </div>
 
-                    <div className="space-x-4 py-4">
+                    <div className="space-x-4 mt-8">
                       <div className="inline-block">
                         <button type="button"
                           className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -198,7 +204,7 @@ export default function Minter() {
                         </button>
                       </div>
                       <div className="inline-block">
-                        <p class="text-xl font-semibold text-gray-900  px-12">
+                        <p class="text-xl font-semibold text-white  px-12">
                           {mintAmount}
                         </p>
                       </div>
@@ -219,10 +225,9 @@ export default function Minter() {
                     </div>
 
 
-                    <div className="py-4">
-                      <button type="button"
-                        className="inline-flex items-center px-24 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    <div className="mt-4">
 
+                      <button type="button" className="relative block cursor-pointer"
                         disabled={claimingNft ? 1 : 0}
                         onClick={(e) => {
                           e.preventDefault();
@@ -230,15 +235,21 @@ export default function Minter() {
                           getData();
                         }}
                       >
-                        {claimingNft ? "BUSY" : "BUY"}
+                        <div className="absolute h-14 inset-x-0 bg-gray-400 border border-gray-500" />
+                        <div className="relative bottom-1 right-1 text-xl font-thin leading-none tracking-wider py-4 px-10 bg-gray-100 border border-gray-500 transform hover:translate-y-1 hover:translate-x-1 transition duration-200 ease-in-out">
+                          {claimingNft ? "BUSY" : "BUY"}
+                        </div>
                       </button>
+
+
+
                     </div>
                   </div>
                 )}
               </div>
             )}
           </div>
-          <div className="py-4">
+          <div className="py-4 text-white">
             <div>
               Please make sure you are connected to the right network (
               {CONFIG.NETWORK.NAME} Mainnet) and the correct address. Please note:
